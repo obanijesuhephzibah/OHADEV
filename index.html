@@ -2425,91 +2425,93 @@ draw();
   }
 </style>
 <style>
-/* Universal reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* === GOLD + BLACK THEME === */
 
-/* Fluid typography */
-html {
-  font-size: clamp(14px, 1.2vw, 22px); /* scales between mobile and ultra-HD */
-  font-family: 'Poppins', sans-serif;
-  scroll-behavior: smooth;
-}
-
-/* Body */
+/* Base */
 body {
-  line-height: 1.6;
   background: #0d0d0d;
-  color: #fff;
-  overflow-x: hidden;
+  color: #D4AF37; /* classic gold */
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
 }
 
-/* Container scales automatically */
-.container {
-  width: min(90%, 1600px); /* max width but fluid */
-  margin: auto;
-  padding: 0 2vw;
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: #FFD700; /* bright gold */
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255,215,0,0.6);
 }
 
-/* Headings scale with screen size */
-h1 {
-  font-size: clamp(2rem, 5vw, 5rem);
-  color: #00ffe0;
-  text-shadow: 0 0 10px #00ffe0;
-}
-h2 {
-  font-size: clamp(1.5rem, 3.5vw, 3.5rem);
+/* Paragraphs and text */
+p, span, label, a {
   color: #D4AF37;
 }
 
-/* Buttons auto-scale */
-.btn {
-  display: inline-block;
-  padding: clamp(10px, 1vw, 20px) clamp(20px, 2vw, 40px);
-  border-radius: 12px;
-  background: linear-gradient(145deg, #00ffe0, #0066ff);
+/* Links */
+a:hover {
+  color: #FFD700;
+  text-shadow: 0 0 5px rgba(255,215,0,0.6);
+}
+
+/* Buttons */
+button, .btn {
+  background: linear-gradient(145deg, #FFD700, #D4AF37);
   color: #000;
   font-weight: bold;
   border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
   cursor: pointer;
-  box-shadow: 0 0 15px #00ffe0;
+  box-shadow: 0 0 15px rgba(255,215,0,0.6);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.btn:hover {
+button:hover, .btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 25px #ff00ff;
+  box-shadow: 0 0 25px rgba(255,215,0,0.9);
 }
 
-/* Images scale fluidly */
+/* Inputs */
+input, textarea, select {
+  background: rgba(255,215,0,0.05);
+  color: #FFD700;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: inset 0 0 10px rgba(255,215,0,0.2);
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  box-shadow: inset 0 0 20px rgba(255,215,0,0.4);
+}
+
+/* Panels / Cards */
+.panel, .card, .box {
+  background: rgba(255,215,0,0.05);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 0 30px rgba(255,215,0,0.2);
+}
+.panel:hover, .card:hover, .box:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 40px rgba(255,215,0,0.4);
+}
+
+/* Images */
 img {
   max-width: 100%;
   height: auto;
-  filter: drop-shadow(0 0 10px rgba(0,255,255,0.3));
+  filter: drop-shadow(0 0 10px rgba(255,215,0,0.3));
+}
+img:hover {
+  filter: drop-shadow(0 0 20px rgba(255,215,0,0.6));
 }
 
-/* Responsive sections */
-section {
-  padding: clamp(40px, 8vw, 120px) 0;
-  transition: background 0.5s ease;
+/* Neon gold text */
+.neon-text {
+  color: #FFD700;
+  text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
 }
-section:hover {
-  background: radial-gradient(circle at center, rgba(0,255,255,0.05), transparent);
-}
-
-/* Media queries for fine-tuning */
-@media (max-width: 768px) {
-  .container { padding: 0 5vw; }
-  h1 { font-size: 2.2rem; }
-  h2 { font-size: 1.6rem; }
-}
-
-@media (min-width: 3840px) {
-  html { font-size: 20px; } /* 4K screens */
-}
-@media (min-width: 7680px) {
-  html { font-size: 24px; } /* 8K+ screens */
+.neon-text:hover {
+  text-shadow: 0 0 20px #FFD700, 0 0 40px #FFD700;
 }
 </style>
