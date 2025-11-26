@@ -1860,20 +1860,79 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
 
     <!-- Cookie Banner -->
-    <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie consent">
-      <div class="cookie-content">
-        <p>We use cookies for basic site functionality and analytics. You can accept or manage preferences. UK cookie consent applies.</p>
-        <div style="margin-top:10px">
-          <label style="display:flex;align-items:center;gap:8px">
-            <input type="checkbox" id="cookieAnalytics" aria-label="Allow analytics cookies"> <span>Enable analytics</span>
-          </label>
-        </div>
-      </div>
-      <div class="cookie-actions">
-        <button class="btn-outline btn-pill" id="cookiePrefs">Preferences</button>
-        <button class="btn-gold btn-pill" id="cookieAccept">Accept</button>
-      </div>
+<!-- Cookie Consent Banner -->
+<div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:#0d0d0d;color:#fff;padding:20px;z-index:9999;box-shadow:0 -2px 10px rgba(0,0,0,0.5);font-family:'Poppins',sans-serif;">
+  <div style="max-width:800px;margin:auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;">
+    
+    <!-- Message -->
+    <div style="flex:1;min-width:250px;">
+      <p style="margin:0;font-size:1rem;line-height:1.5;">
+        We use cookies for basic site functionality and analytics. UK cookie consent applies.
+      </p>
+      <label style="margin-top:10px;display:inline-block;color:#ccc;font-size:0.95rem;">
+        <input type="checkbox" id="analyticsCheckbox" checked> Enable analytics
+      </label>
     </div>
+
+    <!-- Buttons -->
+    <div style="display:flex;gap:10px;">
+      <button id="cookiePrefs" style="padding:10px 20px;background:#D4AF37;color:#000;border:none;border-radius:6px;font-weight:bold;cursor:pointer;">
+        Preferences
+      </button>
+      <button id="cookieAccept" style="padding:10px 20px;background:#D4AF37;color:#000;border:none;border-radius:6px;font-weight:bold;cursor:pointer;">
+        Accept
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Thank You Message -->
+<div id="cookieThanks" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#D4AF37;padding:12px 20px;border-radius:8px;font-weight:bold;z-index:9999;">
+  ✅ Preferences saved!
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const banner = document.getElementById("cookieBanner");
+  const thankYou = document.getElementById("cookieThanks");
+  const acceptBtn = document.getElementById("cookieAccept");
+  const analyticsCheckbox = document.getElementById("analyticsCheckbox");
+
+  // Hide banner if already accepted
+  if (localStorage.getItem("cookiesAccepted") === "true") {
+    banner.style.display = "none";
+  }
+
+  // Accept button logic
+  acceptBtn.addEventListener("click", () => {
+    const analyticsEnabled = analyticsCheckbox.checked;
+
+    // Save preferences
+    localStorage.setItem("cookiesAccepted", "true");
+    localStorage.setItem("analyticsEnabled", analyticsEnabled ? "true" : "false");
+
+    // Hide banner and show thank you
+    banner.style.display = "none";
+    thankYou.style.display = "block";
+
+    // Hide thank you after 3 seconds
+    setTimeout(() => {
+      thankYou.style.display = "none";
+    }, 3000);
+
+    // Optional: trigger analytics setup
+    if (analyticsEnabled) {
+      console.log("Analytics enabled");
+      // You can load Google Analytics or other scripts here
+    }
+  });
+
+  // Preferences button (optional)
+  document.getElementById("cookiePrefs").addEventListener("click", () => {
+    alert("Preferences panel not implemented yet.");
+  });
+});
+</script>
 
     <!-- Thank You Message -->
     <div id="cookieThanks" style="display:none;margin-top:20px;text-align:center;color:#D4AF37;font-weight:bold;font-size:1.2rem;">
@@ -2364,4 +2423,93 @@ draw();
       height: auto;
     }
   }
+</style>
+<style>
+/* Universal reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fluid typography */
+html {
+  font-size: clamp(14px, 1.2vw, 22px); /* scales between mobile and ultra-HD */
+  font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Body */
+body {
+  line-height: 1.6;
+  background: #0d0d0d;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Container scales automatically */
+.container {
+  width: min(90%, 1600px); /* max width but fluid */
+  margin: auto;
+  padding: 0 2vw;
+}
+
+/* Headings scale with screen size */
+h1 {
+  font-size: clamp(2rem, 5vw, 5rem);
+  color: #00ffe0;
+  text-shadow: 0 0 10px #00ffe0;
+}
+h2 {
+  font-size: clamp(1.5rem, 3.5vw, 3.5rem);
+  color: #D4AF37;
+}
+
+/* Buttons auto-scale */
+.btn {
+  display: inline-block;
+  padding: clamp(10px, 1vw, 20px) clamp(20px, 2vw, 40px);
+  border-radius: 12px;
+  background: linear-gradient(145deg, #00ffe0, #0066ff);
+  color: #000;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 15px #00ffe0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #ff00ff;
+}
+
+/* Images scale fluidly */
+img {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(0,255,255,0.3));
+}
+
+/* Responsive sections */
+section {
+  padding: clamp(40px, 8vw, 120px) 0;
+  transition: background 0.5s ease;
+}
+section:hover {
+  background: radial-gradient(circle at center, rgba(0,255,255,0.05), transparent);
+}
+
+/* Media queries for fine-tuning */
+@media (max-width: 768px) {
+  .container { padding: 0 5vw; }
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.6rem; }
+}
+
+@media (min-width: 3840px) {
+  html { font-size: 20px; } /* 4K screens */
+}
+@media (min-width: 7680px) {
+  html { font-size: 24px; } /* 8K+ screens */
+}
 </style>
