@@ -1737,12 +1737,12 @@ document.addEventListener("DOMContentLoaded", () => {
 </style>
       <div class="sep"></div>
 
-  <!-- Contact Form Section -->
-<section id="contact-form" style="position:relative;padding:100px 0;background:#0d0d0d;color:#fff;overflow:hidden;">
+<!-- Contact Form Section -->
+<section id="contact-form" style="position:relative;padding:100px 20px;background:#0d0d0d;color:#fff;overflow:hidden;font-family:'Poppins',sans-serif;">
   
   <!-- Particle Canvas -->
   <canvas id="contactCanvas" style="position:absolute;inset:0;z-index:0;opacity:.3;"></canvas>
-  
+
   <div class="container" style="max-width:700px;margin:auto;text-align:center;position:relative;z-index:2;">
     
     <!-- Title -->
@@ -1754,190 +1754,81 @@ document.addEventListener("DOMContentLoaded", () => {
     </p>
 
     <!-- Contact Form -->
-    <form action="mailto:ohadevelopment@gmail.com?subject=Website%20Enquiry" method="POST" enctype="text/plain" class="form3d">
+    <form name="contact" method="POST" data-netlify="true" enctype="multipart/form-data" class="form3d" onsubmit="showThankYou(event)" 
+          style="background:linear-gradient(145deg,#1a1a1a,#0d0d0d);padding:30px;border-radius:15px;box-shadow:10px 10px 20px #000,-10px -10px 20px #222;text-align:left;animation:fadeInUp 1.5s ease;">
       
+      <input type="hidden" name="form-name" value="contact">
+
       <!-- Name -->
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" name="name" type="text" required>
+      <div class="form-group" style="margin-bottom:20px;">
+        <label for="name" style="display:block;font-weight:600;margin-bottom:8px;color:#D4AF37;">Name</label>
+        <input id="name" name="name" type="text" required
+               style="width:100%;padding:12px 15px;border-radius:10px;border:none;background:#1a1a1a;color:#fff;box-shadow:inset 5px 5px 10px #000,inset -5px -5px 10px #222;">
       </div>
 
       <!-- Email -->
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" required>
+      <div class="form-group" style="margin-bottom:20px;">
+        <label for="email" style="display:block;font-weight:600;margin-bottom:8px;color:#D4AF37;">Email</label>
+        <input id="email" name="email" type="email" required
+               style="width:100%;padding:12px 15px;border-radius:10px;border:none;background:#1a1a1a;color:#fff;box-shadow:inset 5px 5px 10px #000,inset -5px -5px 10px #222;">
+      </div>
+
+      <!-- Phone -->
+      <div class="form-group" style="margin-bottom:20px;">
+        <label for="phone" style="display:block;font-weight:600;margin-bottom:8px;color:#D4AF37;">Phone Number</label>
+        <input id="phone" name="phone" type="tel"
+               style="width:100%;padding:12px 15px;border-radius:10px;border:none;background:#1a1a1a;color:#fff;box-shadow:inset 5px 5px 10px #000,inset -5px -5px 10px #222;">
+      </div>
+
+      <!-- Company -->
+      <div class="form-group" style="margin-bottom:20px;">
+        <label for="company" style="display:block;font-weight:600;margin-bottom:8px;color:#D4AF37;">Company / Organization</label>
+        <input id="company" name="company" type="text"
+               style="width:100%;padding:12px 15px;border-radius:10px;border:none;background:#1a1a1a;color:#fff;box-shadow:inset 5px 5px 10px #000,inset -5px -5px 10px #222;">
       </div>
 
       <!-- Message -->
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
+      <div class="form-group" style="margin-bottom:20px;">
+        <label for="message" style="display:block;font-weight:600;margin-bottom:8px;color:#D4AF37;">Message</label>
+        <textarea id="message" name="message" rows="5" required
+                  style="width:100%;padding:12px 15px;border-radius:10px;border:none;background:#1a1a1a;color:#fff;box-shadow:inset 5px 5px 10px #000,inset -5px -5px 10px #222;"></textarea>
+      </div>
+
+      <!-- File Upload -->
+      <div class="form-group" style="margin-bottom:20px;">
+        <label for="attachment" style="display:block;font-weight:600;margin-bottom:8px;color:#D4AF37;">Attach File</label>
+        <input id="attachment" name="attachment" type="file"
+               style="width:100%;padding:12px 15px;border-radius:10px;border:none;background:#1a1a1a;color:#fff;box-shadow:inset 5px 5px 10px #000,inset -5px -5px 10px #222;">
+      </div>
+
+      <!-- Consent -->
+      <div class="form-group checkbox" style="margin-bottom:20px;display:flex;align-items:center;gap:10px;color:#ccc;">
+        <label>
+          <input type="checkbox" name="consent" required> I agree to be contacted regarding my enquiry.
+        </label>
       </div>
 
       <!-- Submit -->
-      <button type="submit" class="btn-gold">Send Message</button>
+      <button type="submit" class="btn-gold"
+              style="display:inline-block;padding:12px 25px;border-radius:10px;background:linear-gradient(145deg,#ffd700,#e6c200);color:#333;font-weight:bold;border:none;cursor:pointer;box-shadow:5px 5px 10px #000,-5px -5px 10px #222;transition:transform .2s ease,box-shadow .2s ease;">
+        Send Message
+      </button>
     </form>
+
+    <!-- Thank You Message -->
+    <div id="thankyou" style="display:none;margin-top:20px;font-size:1.2rem;color:#D4AF37;">
+      ✅ Thanks for reaching out! We’ve received your message and will get back to you soon.
+    </div>
   </div>
 </section>
-<!-- Address -->
-  <div class="form-group">
-    <label for="address">Full Address</label>
-    <input id="address" name="address" type="text" placeholder="Street, City, Postcode">
-  </div>
 
-  <!-- City -->
-  <div class="form-group">
-    <label for="city">City</label>
-    <input id="city" name="city" type="text">
-  </div>
-
-  <!-- Country -->
-  <div class="form-group">
-    <label for="country">Country</label>
-    <input id="country" name="country" type="text">
-  </div>
-
-  <!-- Project Type -->
-  <div class="form-group">
-    <label for="project_type">Project Type</label>
-    <select id="project_type" name="project_type">
-      <option value="">-- Select one --</option>
-      <option value="personal">Personal Project</option>
-      <option value="business">Business Project</option>
-      <option value="startup">Startup</option>
-      <option value="nonprofit">Non‑Profit</option>
-    </select>
-  </div>
-
-  <!-- Budget Range -->
-  <div class="form-group">
-    <label for="budget">Budget Range</label>
-    <input id="budget" name="budget" type="number" placeholder="Enter amount in £">
-  </div>
-
-  <!-- Deadline -->
-  <div class="form-group">
-    <label for="deadline">Deadline</label>
-    <input id="deadline" name="deadline" type="date">
-  </div>
-
-  <!-- Preferred Platform -->
-  <div class="form-group">
-    <label for="platform">Preferred Platform</label>
-    <select id="platform" name="platform">
-      <option value="">-- Choose one --</option>
-      <option value="wordpress">WordPress</option>
-      <option value="custom_code">Custom Code</option>
-      <option value="shopify">Shopify</option>
-      <option value="wix">Wix</option>
-    </select>
-  </div>
-
-  <!-- File Upload -->
-  <div class="form-group">
-    <label for="attachment">Attach Files (optional)</label>
-    <input id="attachment" name="attachment" type="file" multiple>
-  </div>
-
-  <!-- Newsletter -->
-  <div class="form-group">
-    <label>
-      <input type="checkbox" name="newsletter">
-      Sign me up for updates & newsletters
-    </label>
-  </div>
-</form>
-<style>
-/* 3D Form Styles */
-  .form3d {
-  max-width: 600px;
-  margin: auto;
-  padding: 30px;
-  background: linear-gradient(145deg, #ffffff, #f0f0f0);
-  border-radius: 15px;
-  box-shadow: 10px 10px 20px #c9c9c9, -10px -10px 20px #ffffff;
-  font-family: 'Poppins', sans-serif;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #333;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 12px 15px;
-  border-radius: 10px;
-  border: none;
-  background: #f9f9f9;
-  box-shadow: inset 5px 5px 10px #d1d1d1, inset -5px -5px 10px #ffffff;
-  transition: all 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-  outline: none;
-  box-shadow: inset 2px 2px 5px #d1d1d1, inset -2px -2px 5px #ffffff;
-}
-
-.btn-gold {
-  display: inline-block;
-  padding: 12px 25px;
-  border-radius: 10px;
-  background: linear-gradient(145deg, #ffd700, #e6c200);
-  color: #333;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  box-shadow: 5px 5px 10px #c9c9c9, -5px -5px 10px #ffffff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn-gold:hover {
-  transform: translateY(-2px);
-  box-shadow: 8px 8px 15px #c9c9c9, -8px -8px 15px #ffffff;
-}
-</style>
 <script>
-// Run after page loads
-document.addEventListener("DOMContentLoaded", () => {
-  // Dynamic year
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  const banner = document.getElementById('cookieBanner');
-  const thankYou = document.getElementById('cookieThanks');
-  const acceptBtn = document.getElementById('cookieAccept');
-
-  // Check if cookies were already accepted
-  if(localStorage.getItem("cookiesAccepted") === "true"){
-    banner.style.display = "none";
-    thankYou.style.display = "none"; // don't show again
+  // Show thank you message after submit
+  function showThankYou(e) {
+    e.preventDefault(); // prevent instant reload
+    document.querySelector('.form3d').style.display = 'none';
+    document.getElementById('thankyou').style.display = 'block';
   }
-
-  // Accept button functionality
-  acceptBtn.addEventListener("click", () => {
-    banner.style.display = "none"; // hide banner
-    thankYou.style.display = "block"; // show thank you
-    thankYou.classList.add("fadeIn");
-
-    // Save preference so banner won't show again
-    localStorage.setItem("cookiesAccepted", "true");
-
-    // Hide thank you after 3 seconds
-    setTimeout(() => {
-      thankYou.style.display = "none";
-    }, 3000);
-  });
-});
 </script>
 
 <!-- Footer Section -->
