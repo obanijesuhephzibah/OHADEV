@@ -2572,23 +2572,25 @@ img:hover {
   </div>
 
   <!-- MO1 PRODUCT -->
-  <section id="sg-mo1" class="sg-product-section">
-    <div class="sg-product-inner">
-      <div class="sg-product-media">
-        <div class="sg-video-label-row">
-          <span class="sg-eyebrow">MO1 Smart Glasses</span>
-          <span class="sg-video-tag">Autoplay · Looping · Live Demo</span>
-        </div>
-        <div class="sg-video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/SHjEXiT8pC0?autoplay=1&mute=1&loop=1&playlist=SHjEXiT8pC0&controls=1"
-            title="MO1 Smart AI Glasses demo"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
-        </div>
+   <section id="sg-mo1" class="sg-product-section">
+  <div class="sg-product-inner">
+
+    <!-- FULL HEIGHT VIDEO AREA -->
+    <div class="sg-product-media full-video-wrapper">
+      <div class="sg-video-label-row video-overlay-labels">
+        <span class="sg-eyebrow">MO1 Smart Glasses</span>
+        <span class="sg-video-tag">Autoplay · Looping · Live Demo</span>
       </div>
+
+      <iframe
+        src="https://www.youtube.com/embed/SHjEXiT8pC0?autoplay=1&mute=1&loop=1&playlist=SHjEXiT8pC0&controls=1"
+        title="MO1 Smart AI Glasses demo"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+
 
       <div class="sg-product-content">
         <h3 class="sg-product-title">MO1 — Smart AI Glasses</h3>
@@ -2644,24 +2646,21 @@ img:hover {
   </section>
 
   <!-- MO2 PRODUCT -->
-  <section id="sg-mo2" class="sg-product-section sg-alt">
-    <div class="sg-product-inner">
-      <div class="sg-product-media">
-        <div class="sg-video-label-row">
-          <span class="sg-eyebrow">MO2 Ultra AI Glasses</span>
-          <span class="sg-video-tag">Autoplay · Looping · Live Demo</span>
-        </div>
-        <div class="sg-video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/SDWqF6O7YqQ?autoplay=1&mute=1&loop=1&playlist=SDWqF6O7YqQ&controls=1"
-            title="MO2 Ultra AI Smart Glasses demo"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
-        </div>
+<section id="sg-mo2" class="sg-product-section sg-alt">
+  <div class="sg-product-inner">
+    <div class="sg-product-media full-video-wrapper">
+      <div class="sg-video-label-row video-overlay-labels">
+        <span class="sg-eyebrow">MO2 Ultra AI Glasses</span>
+        <span class="sg-video-tag">Autoplay · Looping · Live Demo</span>
       </div>
 
+      <iframe
+        src="https://www.youtube.com/embed/SDWqF6O7YqQ?autoplay=1&mute=1&loop=1&playlist=SDWqF6O7YqQ&controls=1"
+        title="MO2 Ultra AI Smart Glasses demo"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
       <div class="sg-product-content">
         <h3 class="sg-product-title">MO2 — Ultra AI Smart Glasses + Smart Case</h3>
         <p class="sg-product-text">
@@ -3202,6 +3201,41 @@ img:hover {
   .sg-form-row {
     grid-template-columns: 1fr;
   }
+}
+.full-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* full screen height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Make the video fill the entire wrapper */
+.full-video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Optional: overlay labels on top of the video */
+.video-overlay-labels {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 5;
+  display: flex;
+  gap: 12px;
+  background: rgba(0,0,0,0.45);
+  padding: 6px 12px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
 }
 </style>
 
