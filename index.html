@@ -55,6 +55,19 @@
   <!-- Manifest for PWA -->
   <link rel="manifest" href="manifest.json">
 
+  <!-- Critical minimal CSS inlined for faster first paint (hero + header) -->
+  <style>
+    :root{--gold:#D4AF37;--bg:#020203}
+    html,body{height:100%;margin:0}
+    body{background:var(--bg);color:#f7f7f7;font-family:system-ui, -apple-system, BlinkMacSystemFont, "Poppins", sans-serif}
+    .sticky-preorder-bar{position:sticky;top:0;background:#111118;padding:.6rem 1rem;z-index:20;display:flex;justify-content:space-between;align-items:center}
+    .preorder-hero{padding:48px 16px 32px;max-width:1100px;margin:0 auto}
+    .preorder-title{font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.1;margin:0 0 .8rem}
+    .preorder-subtitle{color:#b8bac5;max-width:800px}
+    .sg-hero-actions{display:flex;gap:.9rem}
+    .sg-btn-primary{background:linear-gradient(135deg,#f0d37a,#f2c55a);color:#111;border-radius:999px;padding:.75rem 1.5rem;text-decoration:none;font-weight:600}
+  </style>
+
   <!-- Inline small script to add lazy/decoding attributes to images as they are parsed -->
   <script>
     (function() {
@@ -1266,10 +1279,13 @@
         </div>
 
         <div class="yt-lite" data-ytid="SHjEXiT8pC0" role="button" tabindex="0" aria-label="Play MO1 demo video" style="position:relative;cursor:pointer;">
-          <img src="assets/media/yt-SHJEXiT8pC0.svg"
-               alt="MO1 Smart Glasses demo thumbnail"
-               loading="lazy"
-               style="width:100%;border-radius:12px;">
+          <picture>
+            <source srcset="/Users/obanijesuhephzibahadeniran/Documents/My personal project/Smart glasses project/YTDown.com_YouTube_M01-Smart-AI-Glasses-with-ChatGPT-5MP-Ca_Media_SHjEXiT8pC0_001_1080p.mp4" type="image/webp">
+            <img src="assets/media/yt-SHJEXiT8pC0.svg"
+            alt="MO1 Smart Glasses demo thumbnail"
+            loading="lazy"
+            style="width:100%;border-radius:12px;">
+          </picture>
           <div style="
             position:absolute;top:50%;left:50%;
             transform:translate(-50%,-50%);
@@ -1401,10 +1417,13 @@
       </div>
 
       <div class="yt-lite" data-ytid="SDWqF6O7YqQ" role="button" tabindex="0" aria-label="Play MO2 demo video" style="position:relative;cursor:pointer;">
-        <img src="assets/media/yt-SDWqF6O7YqQ.svg"
+           <picture>
+          <source srcset="Smart glasses project/YTDown.com_YouTube_M02-Ultra-AI-Smart-Glasses-8MP-Camera-36_Media_SDWqF6O7YqQ_001_1080p.mp4" type="image/webp">
+          <img src="assets/media/yt-SDWqF6O7YqQ.svg"
              alt="MO2 Ultra AI Smart Glasses demo thumbnail"
              loading="lazy"
              style="width:100%;border-radius:12px;">
+           </picture>
         <div style="
           position:absolute;top:50%;left:50%;
           transform:translate(-50%,-50%);
