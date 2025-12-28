@@ -8,11 +8,80 @@
   <meta name="description" content="OHA Development builds high-performing WordPress websites, produces music, and delivers captivating live presentations and performances in the UK." />
   <meta name="theme-color" content="#000000" />
 
-  <!-- Preload fonts or important assets here if needed -->
-  <!-- Example:
+  <!-- SEO & Social -->
+  <link rel="canonical" href="./index.html" />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="OHA Development — MO Smart Glasses Pre-order" />
+  <meta property="og:description" content="Pre-order MO Smart Glasses (MO1 & MO2). Early access, priority support, and guaranteed stock reservation." />
+  <meta property="og:url" content="./index.html" />
+  <meta property="og:image" content="favicon.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@oha_dev" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Load fonts with fallback swap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  -->
+
+  <!-- Structured data (Organization + Product preview) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "OHA Development",
+        "url": "./index.html",
+        "logo": "favicon.svg"
+      },
+      {
+        "@type": "Product",
+        "name": "MO Smart Glasses",
+        "description": "MO1 and MO2 smart glasses with built-in AI assistant, hands-free recording, and real-time translation.",
+        "brand": "OHA",
+        "url": "./index.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- (fonts preconnected above) -->
+
+  <!-- Manifest for PWA -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Inline small script to add lazy/decoding attributes to images as they are parsed -->
+  <script>
+    (function() {
+      function setAttrs(img){
+        try {
+          if (!img.hasAttribute('loading')) img.setAttribute('loading','lazy');
+          if (!img.hasAttribute('decoding')) img.setAttribute('decoding','async');
+        } catch(e){}
+      }
+
+      // apply to already-parsed images
+      document.addEventListener('DOMContentLoaded', function(){
+        document.querySelectorAll('img').forEach(setAttrs);
+      });
+
+      // observe and set as images are added during parsing
+      var mo = new MutationObserver(function(muts){
+        muts.forEach(function(m){
+          m.addedNodes && m.addedNodes.forEach(function(n){
+            if (n && n.tagName === 'IMG') setAttrs(n);
+            if (n && n.querySelectorAll) n.querySelectorAll('img').forEach(setAttrs);
+          });
+        });
+      });
+      mo.observe(document.documentElement || document, {childList:true, subtree:true});
+    })();
+  </script>
 
   <style>
   /* ===================== ULTIMATE PREORDER FUNNEL STYLES ===================== */
@@ -621,7 +690,7 @@
     <a href="#products-contact" class="floating-order-btn">Order now</a>
   </section>
 
-  <!-- Your remaining content goes here, below this section -->
+  <!-- Content continues below -->
 
 <style>
 /* Floating Button */
@@ -1196,8 +1265,8 @@
           <span class="sg-video-tag">Click to play demo</span>
         </div>
 
-        <div class="yt-lite" data-ytid="SHjEXiT8pC0" style="position:relative;cursor:pointer;">
-          <img src="https://i.ytimg.com/vi/SHjEXiT8pC0/hqdefault.jpg"
+        <div class="yt-lite" data-ytid="SHjEXiT8pC0" role="button" tabindex="0" aria-label="Play MO1 demo video" style="position:relative;cursor:pointer;">
+          <img src="assets/media/yt-SHJEXiT8pC0.svg"
                alt="MO1 Smart Glasses demo thumbnail"
                loading="lazy"
                style="width:100%;border-radius:12px;">
@@ -1205,23 +1274,38 @@
             position:absolute;top:50%;left:50%;
             transform:translate(-50%,-50%);
             width:68px;height:48px;
-            background:url('https://www.gstatic.com/youtube/img/branding/youtubelogo/svg/youtube_logo_dark.svg') center/contain no-repeat;
-            opacity:0.8;">
+            background:url('assets/icons/youtube.svg') center/contain no-repeat;
+            opacity:0.9;pointer-events:none;">
           </div>
         </div>
 
         <script>
-          document.addEventListener("click", function(e) {
-            const box = e.target.closest(".yt-lite");
-            if (!box) return;
-            const id = box.dataset.ytid;
-            box.innerHTML =
-              `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1"
-                       title="MO1 Smart Glasses demo"
-                       allow="autoplay; encrypted-media; picture-in-picture"
-                       allowfullscreen
-                       style="width:100%;height:100%;border:0;border-radius:12px;"></iframe>`;
-          });
+          (function(){
+            function playVideo(box) {
+              if (!box || !box.dataset) return;
+              const id = box.dataset.ytid;
+              if (!id) return;
+              box.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&mute=1"
+                title="Demo video"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen
+                style="width:100%;height:100%;border:0;border-radius:12px;"></iframe>`;
+            }
+
+            document.addEventListener('click', function(e){
+              const box = e.target.closest('.yt-lite');
+              if (box) playVideo(box);
+            });
+
+            document.addEventListener('keydown', function(e){
+              if (e.key !== 'Enter' && e.key !== ' ') return;
+              const box = document.activeElement && document.activeElement.closest && document.activeElement.closest('.yt-lite');
+              if (box) {
+                e.preventDefault();
+                playVideo(box);
+              }
+            });
+          })();
         </script>
       </div>
 
@@ -1288,8 +1372,8 @@
         <span class="sg-video-tag">Click to play demo</span>
       </div>
 
-      <div class="yt-lite" data-ytid="SDWqF6O7YqQ" style="position:relative;cursor:pointer;">
-        <img src="https://i.ytimg.com/vi/SDWqF6O7YqQ/hqdefault.jpg"
+      <div class="yt-lite" data-ytid="SDWqF6O7YqQ" role="button" tabindex="0" aria-label="Play MO2 demo video" style="position:relative;cursor:pointer;">
+        <img src="assets/media/yt-SDWqF6O7YqQ.svg"
              alt="MO2 Ultra AI Smart Glasses demo thumbnail"
              loading="lazy"
              style="width:100%;border-radius:12px;">
@@ -1297,8 +1381,8 @@
           position:absolute;top:50%;left:50%;
           transform:translate(-50%,-50%);
           width:68px;height:48px;
-          background:url('https://www.gstatic.com/youtube/img/branding/youtubelogo/svg/youtube_logo_dark.svg') center/contain no-repeat;
-          opacity:0.8;">
+          background:url('assets/icons/youtube.svg') center/contain no-repeat;
+          opacity:0.9;pointer-events:none;">
         </div>
       </div>
     </div>
@@ -1520,100 +1604,6 @@
 </div>
 </section>
 </section>
-.sg-btn-primary {
-  background: linear-gradient(135deg, #f0d37a, #f2c55a);
-  color: #111118;
-}
-.sg-btn-primary:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
-}
-
-.sg-btn-outline {
-  background: transparent;
-  color: #f0d37a;
-  border: 1px solid rgba(240, 211, 122, 0.4);
-}
-.sg-btn-outline:hover {
-  background: rgba(240, 211, 122, 0.08);
-}
-
-.sg-btn-ghost {
-  background: transparent;
-  color: #b8bac5;
-}
-.sg-btn-ghost:hover {
-  color: #f0d37a;
-}
-
-.sg-product-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-top: 1.1rem;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .sg-hero-title {
-    font-size: 2rem;
-  }
-  .sg-product-inner {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 750px) {
-  .sg-products-root {
-    padding: 3rem 1.1rem 3.2rem;
-  }
-  .sg-overview-grid,
-  .sg-compare-grid,
-  .sg-faq-grid,
-  .sg-form-row {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Fullscreen video wrapper */
-.full-video-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #000;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-/* Video fill */
-.full-video-wrapper iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* Video overlay labels */
-.video-overlay-labels {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 5;
-  display: flex;
-  gap: 12px;
-  background: rgba(0,0,0,0.45);
-  padding: 6px 12px;
-  border-radius: 8px;
-  backdrop-filter: blur(4px);
-}
-</style>
-
-<!-- Open Graph -->
-<meta property="og:title" content="OHA Development" />
 <meta property="og:description" content="Websites. Music. Performance. UK-based creative studio." />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://example.com/og-image.png" />
@@ -1646,8 +1636,9 @@
     </nav>
 
     <!-- CTA -->
-    <a href="https://wa.me/447920371963?text=Hello%20OHA%20I%20saw%20your%20portfolio"
+     <a href="https://wa.me/447920371963?text=Hello%20OHA%20I%20saw%20your%20portfolio"
        target="_blank"
+       rel="noopener noreferrer"
        class="cta-btn">💬 WhatsApp</a>
 
     <!-- Mobile Menu Toggle -->
@@ -2222,6 +2213,16 @@ header {
   font-weight: 700;
   border: 1px solid rgba(212,175,55,0.65);
 }
+
+/* Small icon for quick links */
+.link-card .link-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.link-card .label { vertical-align: middle; }
 
 /* Cards grid */
 .grid {
@@ -2857,18 +2858,21 @@ footer {
         </a>
 
         <a class="link-card" href="https://www.youtube.com/@ohadevelopment" target="_blank" rel="noopener">
+          <img class="link-icon" src="assets/icons/youtube.svg" alt="YouTube">
           <span class="label">YouTube</span>
           <span class="pill">Watch</span>
           <div class="desc">Videos, tracks, and performance clips.</div>
         </a>
 
         <a class="link-card" href="https://www.instagram.com/ohadevelopmet/" target="_blank" rel="noopener">
+          <img class="link-icon" src="assets/icons/instagram.svg" alt="Instagram">
           <span class="label">Instagram</span>
           <span class="pill">Follow</span>
           <div class="desc">Visuals, updates, and behind-the-scenes.</div>
         </a>
 
         <a class="link-card" href="https://www.tiktok.com/@ohadevelopment" target="_blank" rel="noopener">
+          <img class="link-icon" src="assets/icons/tiktok.svg" alt="TikTok">
           <span class="label">TikTok</span>
           <span class="pill">Watch</span>
           <div class="desc">Short-form content and performances.</div>
@@ -3009,8 +3013,7 @@ footer {
   </div>
 </section>
 
-<st
-yle>
+<style>
   #website-types {
     padding: 2rem 1rem;
     text-align: center;
@@ -3903,37 +3906,37 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="wa-card">
         <h3>🌐 Website</h3>
         <p>Interested in a website project?</p>
-        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20am%20interested%20in%20a%20website%20project" target="_blank" class="btn-wa">Message</a>
+        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20am%20interested%20in%20a%20website%20project" target="_blank" rel="noopener noreferrer" class="btn-wa">Message</a>
       </div>
 
       <div class="wa-card">
         <h3>🎨 Logo</h3>
         <p>Need a custom logo design?</p>
-        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20need%20a%20custom%20logo%20design" target="_blank" class="btn-wa">Message</a>
+        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20need%20a%20custom%20logo%20design" target="_blank" rel="noopener noreferrer" class="btn-wa">Message</a>
       </div>
 
       <div class="wa-card">
         <h3>🎧 Music</h3>
         <p>Looking for music production help?</p>
-        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20would%20like%20help%20with%20music%20production" target="_blank" class="btn-wa">Message</a>
+        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20would%20like%20help%20with%20music%20production" target="_blank" rel="noopener noreferrer" class="btn-wa">Message</a>
       </div>
 
       <div class="wa-card">
         <h3>🎤 Performance</h3>
         <p>Want to book a live performance?</p>
-        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20want%20to%20book%20a%20live%20performance" target="_blank" class="btn-wa">Message</a>
+        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20want%20to%20book%20a%20live%20performance" target="_blank" rel="noopener noreferrer" class="btn-wa">Message</a>
       </div>
 
       <div class="wa-card">
         <h3>💬 General</h3>
         <p>Just want to say hello?</p>
-        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20just%20wanted%20to%20reach%20out%20and%20say%20hello" target="_blank" class="btn-wa">Message</a>
+        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20just%20wanted%20to%20reach%20out%20and%20say%20hello" target="_blank" rel="noopener noreferrer" class="btn-wa">Message</a>
       </div>
 
       <div class="wa-card">
         <h3>📹 Video Call</h3>
         <p>Book a WhatsApp video call.</p>
-        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20would%20like%20to%20book%20a%20WhatsApp%20video%20call" target="_blank" class="btn-wa">Message</a>
+        <a href="https://wa.me/447920371963?text=Hi%20OHA%2C%20I%20would%20like%20to%20book%20a%20WhatsApp%20video%20call" target="_blank" rel="noopener noreferrer" class="btn-wa">Message</a>
       </div>
 
     </div>
@@ -4150,6 +4153,19 @@ document.addEventListener("DOMContentLoaded", () => {
     .neon-text { color:#FFD700; text-shadow:0 0 10px #FFD700,0 0 20px #FFD700; }
     .neon-text:hover { text-shadow:0 0 20px #FFD700,0 0 40px #FFD700; }
   </style>
+
+  <script>
+    // Register service worker if supported
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('sw.js').then(function(reg) {
+          console.log('SW registered', reg.scope);
+        }).catch(function(err){
+          console.warn('SW registration failed', err);
+        });
+      });
+    }
+  </script>
 
 </body>
 </html>
