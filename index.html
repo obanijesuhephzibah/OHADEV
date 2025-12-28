@@ -3,30 +3,40 @@
 <head>
   <!-- Meta basics -->
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>OHA Development - Websites. Music. Performance.</title>
   <meta name="description" content="OHA Development builds high-performing WordPress websites, produces music, and delivers captivating live presentations and performances in the UK." />
   <meta name="theme-color" content="#000000" />
+  <meta name="color-scheme" content="dark light" />
 
   <!-- SEO & Social -->
   <link rel="canonical" href="./index.html" />
-  <meta name="robots" content="index,follow" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta property="og:locale" content="en_GB" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="OHA Development — MO Smart Glasses Pre-order" />
   <meta property="og:description" content="Pre-order MO Smart Glasses (MO1 & MO2). Early access, priority support, and guaranteed stock reservation." />
   <meta property="og:url" content="./index.html" />
   <meta property="og:image" content="favicon.svg" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:image:type" content="image/svg+xml" />
+  <meta property="og:image:width" content="64" />
+  <meta property="og:image:height" content="64" />
+  <meta name="twitter:card" content="summary" />
   <meta name="twitter:creator" content="@oha_dev" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="OHA Development" />
 
-  <!-- Favicon -->
+  <!-- Favicon & Apple icon -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 
-  <!-- Load fonts with fallback swap -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <!-- Font loading optimized -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
   <!-- Structured data (Organization + Product preview) -->
   <script type="application/ld+json">
@@ -53,19 +63,32 @@
   <!-- (fonts preconnected above) -->
 
   <!-- Manifest for PWA -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="manifest.json" crossorigin="use-credentials">
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.error('SW registration failed', err));
+      });
+    }
+  </script>
 
   <!-- Critical minimal CSS inlined for faster first paint (hero + header) -->
   <style>
-    :root{--gold:#D4AF37;--bg:#020203}
-    html,body{height:100%;margin:0}
-    body{background:var(--bg);color:#f7f7f7;font-family:system-ui, -apple-system, BlinkMacSystemFont, "Poppins", sans-serif}
-    .sticky-preorder-bar{position:sticky;top:0;background:#111118;padding:.6rem 1rem;z-index:20;display:flex;justify-content:space-between;align-items:center}
+    :root{--gold:#D4AF37;--bg:#020203;content-visibility:auto}
+    html{scroll-behavior:smooth}
+    html,body{height:100%;margin:0;overflow-x:hidden}
+    body{background:var(--bg);color:#f7f7f7;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+    .sticky-preorder-bar{position:sticky;top:0;background:#111118;padding:.6rem 1rem;z-index:20;display:flex;justify-content:space-between;align-items:center;contain:layout style paint}
     .preorder-hero{padding:48px 16px 32px;max-width:1100px;margin:0 auto}
     .preorder-title{font-size:clamp(1.6rem,4vw,2.6rem);line-height:1.1;margin:0 0 .8rem}
     .preorder-subtitle{color:#b8bac5;max-width:800px}
     .sg-hero-actions{display:flex;gap:.9rem}
-    .sg-btn-primary{background:linear-gradient(135deg,#f0d37a,#f2c55a);color:#111;border-radius:999px;padding:.75rem 1.5rem;text-decoration:none;font-weight:600}
+    .sg-btn-primary{background:linear-gradient(135deg,#f0d37a,#f2c55a);color:#111;border-radius:999px;padding:.75rem 1.5rem;text-decoration:none;font-weight:600;will-change:transform}
+    img{max-width:100%;height:auto;display:block}
   </style>
 
   <!-- Inline small script to add lazy/decoding attributes to images as they are parsed -->
@@ -1280,11 +1303,13 @@
 
         <div class="yt-lite" data-ytid="SHjEXiT8pC0" role="button" tabindex="0" aria-label="Play MO1 demo video" style="position:relative;cursor:pointer;">
           <picture>
-            <source srcset="/Users/obanijesuhephzibahadeniran/Documents/My personal project/Smart glasses project/YTDown.com_YouTube_M01-Smart-AI-Glasses-with-ChatGPT-5MP-Ca_Media_SHjEXiT8pC0_001_1080p.mp4" type="image/webp">
+            <source srcset="assets/media/SHjEXiT8pC0.webp" type="image/webp">
             <img src="assets/media/yt-SHJEXiT8pC0.svg"
             alt="MO1 Smart Glasses demo thumbnail"
             loading="lazy"
-            style="width:100%;border-radius:12px;">
+            width="800"
+            height="450"
+            style="width:100%;height:auto;border-radius:12px;">
           </picture>
           <div style="
             position:absolute;top:50%;left:50%;
@@ -1418,11 +1443,13 @@
 
       <div class="yt-lite" data-ytid="SDWqF6O7YqQ" role="button" tabindex="0" aria-label="Play MO2 demo video" style="position:relative;cursor:pointer;">
            <picture>
-          <source srcset="Smart glasses project/YTDown.com_YouTube_M02-Ultra-AI-Smart-Glasses-8MP-Camera-36_Media_SDWqF6O7YqQ_001_1080p.mp4" type="image/webp">
+          <source srcset="assets/media/SDWqF6O7YqQ.webp" type="image/webp">
           <img src="assets/media/yt-SDWqF6O7YqQ.svg"
              alt="MO2 Ultra AI Smart Glasses demo thumbnail"
              loading="lazy"
-             style="width:100%;border-radius:12px;">
+             width="800"
+             height="450"
+             style="width:100%;height:auto;border-radius:12px;">
            </picture>
         <div style="
           position:absolute;top:50%;left:50%;
@@ -2884,7 +2911,7 @@ footer {
       <div class="media" id="mediaPanel">
         <div class="panel">
           <span>
-            <img src="https://img.freepik.com/free-vector/realistic-luxury-background_23-2149075180.jpg?semt=ais_hybrid&w=740&q=80" alt="">
+            <img src="https://img.freepik.com/free-vector/realistic-luxury-background_23-2149075180.jpg?semt=ais_hybrid&w=740&q=80" alt="Luxury gradient background" width="740" height="520" loading="lazy" decoding="async">
           </span>
         </div>
       </div>
