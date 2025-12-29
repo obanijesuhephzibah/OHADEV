@@ -46,6 +46,8 @@ img{max-width:100%;display:block;height:auto}
 .card3d:hover{transform:rotateY(6deg) rotateX(3deg) scale(1.03)}
 /* yt-lite video container */
 .yt-lite{width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
+/* Composited animation hint */
+.arrow{will-change:transform}
 /* Accessibility helpers */
 .skip-link{position:fixed;left:12px;top:12px;background:#fff;color:#000;padding:8px 12px;border-radius:8px;z-index:9999;transform:translateY(-120%);transition:transform .2s ease}
 .skip-link:focus{transform:translateY(0)}
