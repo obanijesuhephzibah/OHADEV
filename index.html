@@ -9,17 +9,18 @@
   <meta name="description" content="OHA Development builds high-performing WordPress websites, produces music, and delivers captivating live presentations and performances in the UK." />
   <meta name="theme-color" content="#000000" />
   <meta name="color-scheme" content="dark light" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https://fonts.googleapis.com https://fonts.gstatic.com https://images.unsplash.com https://img.freepik.com https://www.youtube-nocookie.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube-nocookie.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://images.unsplash.com https://img.freepik.com https://i.ytimg.com https://upload.wikimedia.org; frame-src https://www.youtube-nocookie.com; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 
   <!-- SEO & Social -->
-  <link rel="canonical" href="./index.html" />
-  <link rel="alternate" href="./index.html" hreflang="en-GB" />
-  <link rel="alternate" href="./index.html" hreflang="en" />
+  <link rel="canonical" href="https://ohadev.netlify.app/" />
+  <link rel="alternate" href="https://ohadev.netlify.app/" hreflang="en-GB" />
+  <link rel="alternate" href="https://ohadev.netlify.app/" hreflang="en" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta property="og:locale" content="en_GB" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="OHA Development — MO Smart Glasses Pre-order" />
   <meta property="og:description" content="Pre-order MO Smart Glasses (MO1 & MO2). Early access, priority support, and guaranteed stock reservation." />
-  <meta property="og:url" content="./index.html" />
+  <meta property="og:url" content="https://ohadev.netlify.app/" />
   <meta property="og:image" content="favicon.svg" />
   <meta property="og:image:type" content="image/svg+xml" />
   <meta property="og:image:width" content="64" />
@@ -43,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   <!-- Preconnect / prefetch for external assets (limit to most important origins) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,7 +65,7 @@
       {
         "@type": "Organization",
         "name": "OHA Development",
-        "url": "./index.html",
+        "url": "https://ohadev.netlify.app/",
         "logo": "favicon.svg",
         "sameAs": [
           "https://www.youtube.com/@ohadevelopment",
@@ -99,7 +100,7 @@
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "url": "./index.html",
+    "url": "https://ohadev.netlify.app/",
     "name": "OHA Development",
     "description": "Websites, music and live performance by OHA Development.",
     "publisher": {
@@ -292,26 +293,40 @@
 <!-- ========================= -->
 <script>
 (function(){
-  function autoplayAllVideos() {
-    document.querySelectorAll('.yt-lite').forEach(box => {
-      const id = box.dataset.ytid;
-      if (!id) return;
+  function loadVideo(box) {
+    const id = box.dataset.ytid;
+    if (!id) return;
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${id}&rel=0&modestbranding=1`;
+    iframe.title = 'Product Demo Video';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.className = 'yt-iframe';
+    iframe.loading = 'lazy';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    box.innerHTML = '';
+    box.appendChild(iframe);
+  }
 
-      const iframe = document.createElement('iframe');
-      iframe.src =
-        `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playsinline=1&loop=1&playlist=${id}`;
-      iframe.title = 'Product Demo Video';
-      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.className = 'yt-iframe';
-
-      box.innerHTML = '';
-      box.appendChild(iframe);
-    });
+  function initLazyAutoplay() {
+    const boxes = document.querySelectorAll('.yt-lite');
+    if (!('IntersectionObserver' in window)) {
+      boxes.forEach(loadVideo);
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          loadVideo(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '200px 0px', threshold: 0.1 });
+    boxes.forEach(box => observer.observe(box));
   }
 
   window.addEventListener('load', () => {
-    setTimeout(autoplayAllVideos, 200);
+    setTimeout(initLazyAutoplay, 200);
   });
 })();
 </script>
@@ -608,7 +623,7 @@
 </section>
 
 <!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="assets/styles.css" rel="preload" as="style" onload="this.rel='stylesheet'"><noscript><link rel="stylesheet" href="assets/styles.css"></noscript>
 
 <!-- Favicon -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Cpath d='M12 44h8V20h-8v24zm12 0h8V12h-8v32zm12 0h8V28h-8v16z' fill='%23D4AF37'/%3E%3C/svg%3E" type="image/svg+xml" />
@@ -1192,7 +1207,9 @@
 
       <!-- Performance -->
       <div class="card" style="background:#121212;border:1px solid #2a2a2a;border-radius:18px;overflow:hidden;">
-        <img src="https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?cs=srgb&dl=pexels-vishnurnair-1105666.jpg&fm=jpg"
+        <img src="assets/media/pexels-1105666-800.webp"
+             srcset="assets/media/pexels-1105666-480.webp 480w, assets/media/pexels-1105666-800.webp 800w, assets/media/pexels-1105666-1200.webp 1200w"
+             sizes="(max-width:600px) 100vw, 400px"
              alt="Live Performance"
              width="400"
              height="180"
@@ -1298,7 +1315,9 @@
 
       <!-- Testimonial 3 -->
       <div class="card3d">
-        <img src="https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?cs=srgb&dl=pexels-vishnurnair-1105666.jpg&fm=jpg"
+        <img src="assets/media/pexels-1105666-800.webp"
+             srcset="assets/media/pexels-1105666-480.webp 480w, assets/media/pexels-1105666-800.webp 800w, assets/media/pexels-1105666-1200.webp 1200w"
+             sizes="(max-width:600px) 100vw, 400px"
              alt="Live Event Performance"
              width="400"
              height="180"
