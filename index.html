@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=optional" rel="stylesheet" media="(min-width:768px)">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=optional" onload="this.rel='stylesheet'" media="(min-width:768px)"><noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=optional" rel="stylesheet" media="(min-width:768px)"></noscript>
   <!-- Preconnect / prefetch for external assets (limit to most important origins) -->
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="preconnect" href="https://img.freepik.com" crossorigin>
@@ -170,7 +170,7 @@
       <h2 class="selector-title">Which model fits you best?</h2>
       <p class="selector-subtitle">Choose your use case and we'll guide you.</p>
 
-      <div class="selector-options" role="list">
+      <div class="selector-options">
         <button class="selector-btn" type="button" onclick="location.href='#sg-mo1'">
           <span aria-hidden="true">🎓 Everyday use / study / commuting</span>
           <span>MO1 recommended</span>
