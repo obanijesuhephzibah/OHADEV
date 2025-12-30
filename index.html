@@ -9,7 +9,7 @@
   <meta name="description" content="OHA Development builds high-performing WordPress websites, produces music, and delivers captivating live presentations and performances in the UK." />
   <meta name="theme-color" content="#000000" />
   <meta name="color-scheme" content="dark light" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https://fonts.googleapis.com https://fonts.gstatic.com https://images.unsplash.com https://img.freepik.com https://www.youtube-nocookie.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube-nocookie.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://images.unsplash.com https://img.freepik.com https://i.ytimg.com https://upload.wikimedia.org; frame-src https://www.youtube-nocookie.com; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob: https://fonts.googleapis.com https://fonts.gstatic.com https://images.unsplash.com https://img.freepik.com https://www.youtube-nocookie.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube-nocookie.com https://www.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://images.unsplash.com https://img.freepik.com https://i.ytimg.com https://upload.wikimedia.org; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://api.openai.com https://en.wikipedia.org https://api.duckduckgo.com https://www.googleapis.com https://serpapi.com; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 
   <!-- SEO & Social -->
   <link rel="canonical" href="https://ohadev.netlify.app/" />
@@ -1837,3 +1837,97 @@ document.addEventListener("DOMContentLoaded", () => {
 <style>@media (min-width:481px) and (max-width:1024px){body{font-size:15px;padding:1rem}.container{width:90%;margin:0 auto}nav{flex-direction:row;justify-content:space-around;gap:1rem}img,video{max-width:100%;height:auto}}</style>
   <!-- Gold + Black Theme -->
 <style>body{background:#0d0d0d;color:#D4AF37;font-family:Poppins,sans-serif;line-height:1.6}h1,h2,h3,h4,h5,h6{color:#FFD700;font-weight:700;text-shadow:0 0 10px rgba(255,215,0,.6)}a,label,p,span{color:#D4AF37}a:hover{color:#FFD700;text-shadow:0 0 5px rgba(255,215,0,.6)}.btn,button{background:linear-gradient(145deg,#FFD700,#D4AF37);color:#000;font-weight:700;border:none;border-radius:12px;padding:12px 24px;cursor:pointer;box-shadow:0 0 15px rgba(255,215,0,.6);transition:transform .3s ease,box-shadow .3s ease}.btn:hover,button:hover{transform:scale(1.05);box-shadow:0 0 25px rgba(255,215,0,.9)}input,select,textarea{background:rgba(255,215,0,.05);color:#FFD700;border:none;border-radius:10px;padding:12px;box-shadow:inset 0 0 10px rgba(255,215,0,.2)}input:focus,select:focus,textarea:focus{outline:0;box-shadow:inset 0 0 20px rgba(255,215,0,.4)}.box,.card,.panel{background:rgba(255,215,0,.05);border-radius:20px;padding:30px;box-shadow:0 0 30px rgba(255,215,0,.2)}.box:hover,.card:hover,.panel:hover{transform:translateY(-10px);box-shadow:0 0 40px rgba(255,215,0,.4)}img{max-width:100%;height:auto;filter:drop-shadow(0 0 10px rgba(255,215,0,.3))}img:hover{filter:drop-shadow(0 0 20px rgba(255,215,0,.6))}.neon-text{color:#FFD700;text-shadow:0 0 10px #FFD700,0 0 20px #FFD700}.neon-text:hover{text-shadow:0 0 20px #FFD700,0 0 40px #FFD700}</style>
+<button class="chat-launcher" id="chat-launcher" aria-haspopup="dialog" aria-controls="chat-panel">
+  <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#D4AF37"/>
+        <stop offset="1" stop-color="#E8C45A"/>
+      </linearGradient>
+    </defs>
+    <rect x="8" y="10" width="48" height="36" rx="12" fill="#0a0a0a" stroke="url(#g)" stroke-width="2"/>
+    <circle cx="24" cy="28" r="6" fill="#D4AF37"/>
+    <circle cx="40" cy="28" r="6" fill="#D4AF37"/>
+    <rect x="22" y="38" width="20" height="4" rx="2" fill="#E8C45A"/>
+    <rect x="26" y="6" width="12" height="6" rx="3" fill="#111" stroke="#E8C45A" stroke-width="1"/>
+    <circle cx="20" cy="48" r="3" fill="#555"/>
+    <circle cx="44" cy="48" r="3" fill="#555"/>
+  </svg>
+  OHA
+</button>
+<div class="chat-panel" id="chat-panel" role="dialog" aria-modal="true" aria-labelledby="chat-title">
+  <div class="chat-header">
+    <span id="chat-title">OHA — AI Assistant</span>
+    <button id="chat-close" aria-label="Close">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input">
+    <input id="chat-input" type="text" placeholder="Type your question…" aria-label="Message">
+    <button id="chat-send">Send</button>
+  </div>
+  </div>
+<script>
+  (function(){
+    var launcher=document.getElementById('chat-launcher');
+    var panel=document.getElementById('chat-panel');
+    var close=document.getElementById('chat-close');
+    var input=document.getElementById('chat-input');
+    var send=document.getElementById('chat-send');
+    var msgs=document.getElementById('chat-messages');
+    var history=[];
+    function open(){panel.classList.add('open'); input.focus();}
+    function hide(){panel.classList.remove('open'); launcher.focus();}
+    function msg(role,text){
+      var d=document.createElement('div');
+      d.className='chat-msg '+role;
+      d.textContent=text;
+      msgs.appendChild(d);
+      msgs.scrollTop=msgs.scrollHeight;
+      history.push({role:role,content:text});
+    }
+    function request(text){
+      msg('user',text);
+      var key = localStorage.getItem('ai_key') || window.OHA_AI_KEY;
+      if (key) {
+        fetch('https://api.openai.com/v1/chat/completions',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+          body:JSON.stringify({model:'gpt-4o-mini',temperature:0.2,messages:[{role:'system',content:'You are OHA, the AI assistant for OHA Development. Provide clear, complete, friendly answers for any question across general knowledge. Prefer concise, actionable steps. Include relevant CTAs when helpful.'}].concat(history.slice(-6).map(function(m){return {role:m.role,content:m.content};})).concat([{role:'user',content:text}])})
+        })
+        .then(function(r){return r.ok?r.json():Promise.reject(r)})
+        .then(function(j){var c=j && j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content || ''; msg('assistant',c)})
+        .catch(function(){msg('assistant','AI service error. Remove key to use built-in helper.')});
+      } else {
+        fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:text}],googleApiKey:(localStorage.getItem('google_cse_key')||window.GOOGLE_CSE_KEY||''),googleCseCx:(localStorage.getItem('google_cse_cx')||window.GOOGLE_CSE_CX||''),serpApiKey:(localStorage.getItem('serp_api_key')||window.SERP_API_KEY||'')})})
+          .then(function(r){return r.ok?r.json():Promise.reject(r)})
+          .then(function(j){
+            msg('assistant',j.content||'');
+            if (j && j.cta && j.cta.href) {
+              var a=document.createElement('a');
+              a.href=j.cta.href;
+              a.textContent=j.cta.label||'Contact';
+              a.className='btn';
+              a.addEventListener('click',function(e){
+                e.preventDefault();
+                location.href=j.cta.href;
+              });
+              msgs.appendChild(a);
+              msgs.scrollTop=msgs.scrollHeight;
+            }
+          })
+          .catch(function(){msg('assistant','I could not reach the helper right now.')});
+      }
+    }
+    launcher.addEventListener('click',open);
+    close.addEventListener('click',hide);
+    send.addEventListener('click',function(){
+      var v=input.value.trim();
+      if(!v) return;
+      input.value='';
+      request(v);
+    });
+    input.addEventListener('keydown',function(e){
+      if(e.key==='Enter'){send.click();}
+    });
+  })();
+</script>
